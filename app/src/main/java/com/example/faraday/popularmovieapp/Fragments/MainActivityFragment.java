@@ -74,7 +74,7 @@ public class MainActivityFragment extends Fragment {
         if (settingsProperty.equalsIgnoreCase("0")) {
             map.put("sort_by", "popularity.desc");
         } else {
-            map.put("sort_by", "rating.asc");
+            map.put("sort_by", "vote_average.desc");
         }
 
 
