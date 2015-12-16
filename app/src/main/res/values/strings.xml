@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Popular Movie App</string>
+    <string name="action_settings">Settings</string>
+    <string name="movie_list">Movie List</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="poster_image_desc">Poster</string>
+    <string name="play_button_text">Play</string>
+    <string name="reviews">Reviews</string>
+    <string name="title_activity_reviews">ReviewsActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <string-array name="sorting_array">
+        <item>"by Popularity"</item>
+        <item>"by Rating"</item>
+    </string-array>
+    <string-array name="numbers">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <!-- Strings related to Settings -->
+
+
+</resources>
