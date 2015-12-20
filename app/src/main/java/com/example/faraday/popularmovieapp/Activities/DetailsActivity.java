@@ -9,7 +9,7 @@ import com.example.faraday.popularmovieapp.Fragments.DetailsActivityFragment;
 import com.example.faraday.popularmovieapp.R;
 
 public class DetailsActivity extends AppCompatActivity {
-    private final String TAG = this.getClass().getCanonicalName();
+    final static private String TAG = DetailsActivity.class.getCanonicalName();
     private DetailsActivityFragment mContent;
 
     @Override

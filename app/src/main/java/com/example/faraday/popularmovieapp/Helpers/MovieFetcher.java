@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
  * Created by faraday on 12/11/15.
  */
 public class MovieFetcher implements Fetcher {
-    private final String TAG = this.getClass().getCanonicalName();
+    final static private String TAG = MovieFetcher.class.getCanonicalName();
     private HttpURLConnection connection;
     private BufferedReader reader;
 
@@ -29,24 +30,37 @@ public class MovieFetcher implements Fetcher {
             }
         }
 
-        final URL baseURL = new URL(builder.build().toString());
 
-        connection = (HttpURLConnection) baseURL.openConnection();
-        connection.setRequestMethod("GET");
-        connection.connect();
+        try {
+            final URL baseURL = new URL(builder.build().toString());
 
-        InputStream inputStream = connection.getInputStream();
-        if (inputStream == null) {
-            return null;
+            connection = (HttpURLConnection) baseURL.openConnection();
+            connection.setRequestMethod("GET");
+
+            connection.connect();
+
+            InputStream inputStream = connection.getInputStream();
+            if (inputStream == null) {
+                return null;
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+
+            return stringBuilder.toString();
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            connection.disconnect();
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw e;
+            }
         }
-        reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            stringBuilder.append(line);
-        }
-
-        return stringBuilder.toString();
     }
 
     public void clean() {

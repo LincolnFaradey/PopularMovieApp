@@ -29,7 +29,8 @@ import android.view.View;
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private ListPreference mListPrefernce;
-    final private String TAG = this.getClass().getCanonicalName();
+    final static private String TAG = SettingsActivity.class.getCanonicalName();
+
     /**
      * Helper method to determine if the device has an extra-large screen. For
      * example, 10" tablets are extra-large.
@@ -49,21 +50,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-        View rootView = super.onCreateView(parent, name, context, attrs);
-
-//        mListPrefernce = (ListPreference) getPreferenceManager().findPreference("sort_by");
-//        mListPrefernce.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object newValue) {
-//                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-//                Log.e(TAG, "onPreferenceChange: new value = " + newValue);
-////                editor.putString("")
-////                SP.str
-//                return false;
-//            }
-//        });
-
-        return rootView;
+        return super.onCreateView(parent, name, context, attrs);
     }
 
     /**

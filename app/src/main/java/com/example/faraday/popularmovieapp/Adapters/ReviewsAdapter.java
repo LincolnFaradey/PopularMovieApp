@@ -1,6 +1,7 @@
 package com.example.faraday.popularmovieapp.Adapters;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
         View row = convertView;
 
         Review review = mReviews.get(position);
-        ReviewViewHolder holder = null;
+        ReviewViewHolder holder;
         if (row == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             row = inflater.inflate(mResource, parent, false);

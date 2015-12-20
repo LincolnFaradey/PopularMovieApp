@@ -1,5 +1,8 @@
 package com.example.faraday.popularmovieapp.Models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by faraday on 12/14/15.
  */
@@ -10,6 +13,11 @@ public class Review {
     public Review(String author, String review) {
         this.author = author;
         this.review = review;
+    }
+
+    public Review(JSONObject object) throws JSONException {
+        this.author = object.getString("author");
+        this.review = object.getString("content");
     }
 
     public String getAuthor() {

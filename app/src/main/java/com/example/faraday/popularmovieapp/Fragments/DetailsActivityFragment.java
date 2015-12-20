@@ -42,7 +42,8 @@ import jp.wasabeef.picasso.transformations.gpu.ContrastFilterTransformation;
  * A placeholder fragment containing a simple view.
  */
 public class DetailsActivityFragment extends Fragment {
-    private final String TAG = this.getClass().getCanonicalName();
+    final static private String TAG = DetailsActivityFragment.class.getCanonicalName();
+
     private ImageView mPosterImageView;
     private ImageView mBackgroundImageView;
     private Button mPlayButton;

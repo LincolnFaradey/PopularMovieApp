@@ -32,7 +32,7 @@ import java.util.HashMap;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    final private String TAG = this.getClass().getCanonicalName();
+    final static private String TAG = MainActivityFragment.class.getCanonicalName();
     private GridView mGridView;
     private ImageAdapter mAdapter;
 

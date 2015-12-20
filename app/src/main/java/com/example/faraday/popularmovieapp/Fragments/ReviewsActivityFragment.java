@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.example.faraday.popularmovieapp.Adapters.ReviewsAdapter;
 import com.example.faraday.popularmovieapp.Helpers.MovieFetcher;
+import com.example.faraday.popularmovieapp.Helpers.ReviewsFetcher;
 import com.example.faraday.popularmovieapp.Models.Review;
 import com.example.faraday.popularmovieapp.R;
 
@@ -25,7 +26,7 @@ import java.util.ArrayList;
  * A placeholder fragment containing a simple view.
  */
 public class ReviewsActivityFragment extends Fragment {
-    private final String TAG = this.getClass().getCanonicalName();
+    final static private String TAG = ReviewsActivityFragment.class.getCanonicalName();
     ReviewsAdapter mAdapter;
     ListView mListView;
     ArrayList<Review> mReviews;
@@ -46,6 +47,7 @@ public class ReviewsActivityFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.reviews_list);
         mListView.setAdapter(mAdapter);
 
+//        new ReviewsFetcher(mID).
         new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mID);
         return rootView;
     }
@@ -55,9 +57,9 @@ public class ReviewsActivityFragment extends Fragment {
         @Override
         protected String doInBackground(Integer... params) {
             String resp = null;
-            MovieFetcher fetcher = new MovieFetcher();
+            ReviewsFetcher fetcher = new ReviewsFetcher(params[0]);
             try {
-                resp = fetcher.fetch("movie/" + params[0] + "/reviews", null);
+                resp = fetcher.fetch();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -77,9 +79,8 @@ public class ReviewsActivityFragment extends Fragment {
                 ArrayList<Review> reviews = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject obj = array.getJSONObject(i);
-                    String author = obj.getString("author");
-                    String content = obj.getString("content");
-                    Review r = new Review(author, content);
+                    Review r = new Review(obj);
+
                     reviews.add(r);
                 }
 
