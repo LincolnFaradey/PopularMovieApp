@@ -47,8 +47,8 @@ public class ImageAdapter extends ArrayAdapter<MovieItem> {
 
         Picasso.with(mContext)
                 .load(mImages.get(position).getPosterPath())
-                .fit()
                 .placeholder(R.raw.placeholder)
+                .error(R.raw.placeholder)
                 .into(holder.image);
 
         return row;

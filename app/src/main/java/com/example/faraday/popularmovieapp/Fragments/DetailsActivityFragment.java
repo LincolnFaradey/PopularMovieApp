@@ -74,7 +74,7 @@ public class DetailsActivityFragment extends Fragment {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("append_to_response", "trailers");
                 Request request = new Request(mMovieItem.getID(), Request.Type.VIDEOS, map);
-                new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
+                new AsyncFetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
             }
 
 
@@ -138,23 +138,23 @@ public class DetailsActivityFragment extends Fragment {
         Picasso.with(getActivity()).
                 load(mMovieItem.getPosterPath())
                 .placeholder(R.raw.placeholder)
+                .error(R.raw.placeholder)
                 .into(mPosterImageView);
 
         Transformation trans1 = new ContrastFilterTransformation(getActivity(), 0.6f);
         Transformation trans2 = new BrightnessFilterTransformation(getActivity(), -0.2f);
         Picasso.with(getActivity()).
                 load(mMovieItem.getBackground())
-                .fit()
-                .centerCrop()
                 .transform(trans1)
                 .transform(trans2)
                 .placeholder(R.raw.placeholder)
+                .error(R.raw.placeholder)
                 .into(mBackgroundImageView);
     }
 
 
 
-    private class Fetcher extends AsyncTask<Request, Integer, String> {
+    private class AsyncFetcher extends AsyncTask<Request, Integer, String> {
 
         @Override
         protected String doInBackground(Request... params) {
