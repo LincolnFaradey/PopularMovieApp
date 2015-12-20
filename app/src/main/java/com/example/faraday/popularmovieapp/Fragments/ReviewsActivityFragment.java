@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.faraday.popularmovieapp.Adapters.ReviewsAdapter;
-import com.example.faraday.popularmovieapp.Helpers.MovieFetcher;
-import com.example.faraday.popularmovieapp.Helpers.ReviewsFetcher;
+import com.example.faraday.popularmovieapp.Helpers.DataFetcher;
+import com.example.faraday.popularmovieapp.Models.Request;
 import com.example.faraday.popularmovieapp.Models.Review;
 import com.example.faraday.popularmovieapp.R;
 
@@ -46,22 +46,27 @@ public class ReviewsActivityFragment extends Fragment {
 
         mListView = (ListView) rootView.findViewById(R.id.reviews_list);
         mListView.setAdapter(mAdapter);
-
-//        new ReviewsFetcher(mID).
-        new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mID);
+        Request request = new Request("movie/" + mID + "/reviews", null);
+        new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
         return rootView;
     }
 
-    private class Fetcher extends AsyncTask<Integer, Integer, String> {
+    private class Fetcher extends AsyncTask<Request, Integer, String> {
 
         @Override
-        protected String doInBackground(Integer... params) {
+        protected String doInBackground(Request... params) {
             String resp = null;
-            ReviewsFetcher fetcher = new ReviewsFetcher(params[0]);
+            DataFetcher fetcher = new DataFetcher();
             try {
-                resp = fetcher.fetch();
+                resp = fetcher.fetch(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    fetcher.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             Log.d(TAG, "onClick: " + resp);
             return resp;

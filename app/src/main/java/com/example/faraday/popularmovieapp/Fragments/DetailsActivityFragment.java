@@ -16,9 +16,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.faraday.popularmovieapp.Activities.DetailsActivity;
 import com.example.faraday.popularmovieapp.Activities.ReviewsActivity;
-import com.example.faraday.popularmovieapp.Helpers.MovieFetcher;
+import com.example.faraday.popularmovieapp.Helpers.DataFetcher;
 import com.example.faraday.popularmovieapp.Models.MovieItem;
+import com.example.faraday.popularmovieapp.Models.Request;
 import com.example.faraday.popularmovieapp.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -42,8 +44,7 @@ import jp.wasabeef.picasso.transformations.gpu.ContrastFilterTransformation;
  * A placeholder fragment containing a simple view.
  */
 public class DetailsActivityFragment extends Fragment {
-    final static private String TAG = DetailsActivityFragment.class.getCanonicalName();
-
+    final static private String TAG = DetailsActivity.class.getCanonicalName();
     private ImageView mPosterImageView;
     private ImageView mBackgroundImageView;
     private Button mPlayButton;
@@ -70,7 +71,10 @@ public class DetailsActivityFragment extends Fragment {
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, 0);
+                HashMap<String, String> map = new HashMap<>();
+                map.put("append_to_response", "trailers");
+                Request request = new Request("movie/" + mMovieItem.getID() + "/videos", map);
+                new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
             }
 
 
@@ -98,6 +102,7 @@ public class DetailsActivityFragment extends Fragment {
         TextView releaseDateTextView = (TextView) rootView.findViewById(R.id.release_date);
         final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         final Calendar calendar = Calendar.getInstance();
+
         try {
             Date date = dateFormat.parse(mMovieItem.getReleaseDate());
             calendar.setTime(date);
@@ -149,16 +154,14 @@ public class DetailsActivityFragment extends Fragment {
 
 
 
-    private class Fetcher extends AsyncTask<Integer, Integer, String> {
+    private class Fetcher extends AsyncTask<Request, Integer, String> {
 
         @Override
-        protected String doInBackground(Integer... params) {
+        protected String doInBackground(Request... params) {
             String resp = null;
-            MovieFetcher fetcher = new MovieFetcher();
+            DataFetcher fetcher = new DataFetcher();
             try {
-                HashMap<String, String> map = new HashMap<>();
-                map.put("append_to_response", "trailers");
-                resp = fetcher.fetch("movie/" + mMovieItem.getID() + "/videos", map);
+                resp = fetcher.fetch(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
             }

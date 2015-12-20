@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,7 +15,7 @@ import android.widget.GridView;
 
 import com.example.faraday.popularmovieapp.Activities.DetailsActivity;
 import com.example.faraday.popularmovieapp.Adapters.ImageAdapter;
-import com.example.faraday.popularmovieapp.Helpers.MovieFetcher;
+import com.example.faraday.popularmovieapp.Helpers.DataFetcher;
 import com.example.faraday.popularmovieapp.Models.MovieItem;
 import com.example.faraday.popularmovieapp.Models.Request;
 import com.example.faraday.popularmovieapp.R;
@@ -25,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -90,15 +90,19 @@ public class MainActivityFragment extends Fragment {
         protected ArrayList<MovieItem> doInBackground(Request... params) {
             Request request = params[0];
 
-            MovieFetcher movieFetcher = new MovieFetcher();
+            DataFetcher fetcher = new DataFetcher();
             try {
-                final String resp = movieFetcher.fetch(request.getEncodedPath(), request.getEndpoints());
+                final String resp = fetcher.fetch(request);
 
                 return parseJSONString(resp);
             }catch (Exception e) {
                 e.printStackTrace();
             }finally {
-                movieFetcher.clean();
+                try {
+                    fetcher.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             return null;
