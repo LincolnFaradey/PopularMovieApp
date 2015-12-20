@@ -46,7 +46,7 @@ public class ReviewsActivityFragment extends Fragment {
 
         mListView = (ListView) rootView.findViewById(R.id.reviews_list);
         mListView.setAdapter(mAdapter);
-        Request request = new Request("movie/" + mID + "/reviews", null);
+        Request request = new Request(mID, Request.Type.REVIEWS, null);
         new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
         return rootView;
     }

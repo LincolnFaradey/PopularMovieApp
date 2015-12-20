@@ -78,7 +78,7 @@ public class MainActivityFragment extends Fragment {
         }
 
 
-        Request request = new Request("discover/movie", map);
+        Request request = new Request(Request.Type.MOVIES, map);
         new FetchMovies().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
     }
 

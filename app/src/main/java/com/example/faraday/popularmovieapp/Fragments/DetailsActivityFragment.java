@@ -73,7 +73,7 @@ public class DetailsActivityFragment extends Fragment {
             public void onClick(View v) {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("append_to_response", "trailers");
-                Request request = new Request("movie/" + mMovieItem.getID() + "/videos", map);
+                Request request = new Request(mMovieItem.getID(), Request.Type.VIDEOS, map);
                 new Fetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
             }
 
