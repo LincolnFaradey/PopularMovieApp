@@ -28,7 +28,6 @@ import android.view.View;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private ListPreference mListPrefernce;
     final static private String TAG = SettingsActivity.class.getCanonicalName();
 
     /**

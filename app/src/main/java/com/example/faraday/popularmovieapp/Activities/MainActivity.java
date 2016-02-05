@@ -1,18 +1,23 @@
 package com.example.faraday.popularmovieapp.Activities;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.faraday.popularmovieapp.Fragments.DetailsActivityFragment;
 import com.example.faraday.popularmovieapp.R;
 import com.example.faraday.popularmovieapp.SettingsActivity;
 
 //import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
+    final static private String TAG = MainActivity.class.getCanonicalName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +32,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        if (findViewById(R.id.details_fragment_container) != null) {
+            if (savedInstanceState == null) {
+                Log.e(TAG, "onCreate: main container is here");
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.details_fragment_container, new DetailsActivityFragment(), "DTAG")
+                .commit();
+            }
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override

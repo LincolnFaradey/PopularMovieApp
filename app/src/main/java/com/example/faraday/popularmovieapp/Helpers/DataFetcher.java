@@ -1,6 +1,7 @@
 package com.example.faraday.popularmovieapp.Helpers;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.faraday.popularmovieapp.Models.Request;
 
@@ -26,6 +27,7 @@ public class DataFetcher implements Fetcher {
                 .appendEncodedPath(request.getEncodedPath())
                 .appendQueryParameter("api_key", API_KEY);
 
+
         if (request.getEndpoints() != null) {
             for (Map.Entry<String, String> entry : request.getEndpoints().entrySet()) {
                 builder.appendQueryParameter(entry.getKey(), entry.getValue());
@@ -33,7 +35,7 @@ public class DataFetcher implements Fetcher {
         }
 
         final URL baseURL = new URL(builder.build().toString());
-
+        Log.d(TAG, "fetch: URL = " + baseURL);
         mConnection = (HttpURLConnection) baseURL.openConnection();
         mConnection.setRequestMethod("GET");
 
@@ -43,19 +45,21 @@ public class DataFetcher implements Fetcher {
         if (inputStream == null) {
             return null;
         }
+
         mReader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder stringBuilder = new StringBuilder();
         String line;
         while ((line = mReader.readLine()) != null) {
             stringBuilder.append(line);
         }
-
+        Log.d(TAG, "fetch: RESPONSE" + stringBuilder.toString());
         return stringBuilder.toString();
     }
 
 
     public void close() throws IOException {
         mConnection.disconnect();
-        mReader.close();
+        if (mReader != null)
+            mReader.close();
     }
 }

@@ -46,15 +46,8 @@ public class Request {
         return encodedPath;
     }
 
-    public void setEncodedPath(String encodedPath) {
-        this.encodedPath = encodedPath;
-    }
-
     public HashMap<String, String> getEndpoints() {
         return endpoints;
     }
 
-    public void setEndpoints(HashMap<String, String> endpoints) {
-        this.endpoints = endpoints;
-    }
 }

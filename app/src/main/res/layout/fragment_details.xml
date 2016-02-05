@@ -1,23 +1,33 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.DetailsActivityFragment"
     tools:showIn="@layout/activity_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    >
+    android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+        <TextView
+            android:id="@+id/text_view_msg"
+            android:text="@string/msg"
+            android:textColor="@color/orange800"
+            android:textSize="48sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"/>
 
         <ImageView
             android:id="@+id/wallpaper_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:layout_gravity="top"
             android:adjustViewBounds="true"
             android:contentDescription="@string/wallpaper"
@@ -30,7 +40,7 @@
             android:layout_centerHorizontal="true"
             android:drawableBottom="@mipmap/android_play"
             android:layout_marginTop="80dp"
-            android:background="@color/transparent"
+            android:background="@android:color/transparent"
             />
 
         <LinearLayout
@@ -100,6 +110,7 @@
                 android:id="@+id/reviews_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
                 android:text="@string/reviews"
                 android:background="@color/lightBlue400"/>
 
@@ -113,7 +124,8 @@
             android:layout_alignEnd="@+id/wallpaper_img"
             android:layout_alignRight="@+id/wallpaper_img"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_input_add" />
+            android:tint="@android:color/white"
+            android:src="@android:drawable/ic_menu_save" />
     </RelativeLayout>
 </ScrollView>
 
